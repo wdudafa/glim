@@ -15,7 +15,6 @@ export default async function Home() {
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-              <Profile />
               <h1>5:53:29 till next image</h1>
               <a href="/camera" className="button button">
                 Take a picture
