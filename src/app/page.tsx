@@ -23,6 +23,9 @@ export default async function Home() {
               <a href="/profile" className="button button">
                 View Profile
               </a>
+              <a href="/leaderboard" className="button button">
+                View Leaderboard
+              </a>
             </div>
           ) : (
             <>
