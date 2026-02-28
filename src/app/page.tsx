@@ -11,19 +11,85 @@ export default async function Home() {
   return (
     <div className="app-container">
       <div className="main-card-wrapper">
-        <h1 className="main-title">Glim</h1>
+        <h1
+          style={{
+            fontSize: "64px",
+            fontWeight: "900",
+            margin: "0",
+            color: "#ffffff",
+            letterSpacing: "-4px",
+            background: "linear-gradient(to bottom, #fff, #666)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          Glim
+        </h1>
+        <p
+          style={{
+            color: "#666",
+            textTransform: "uppercase",
+            fontSize: "12px",
+            letterSpacing: "2px",
+            fontWeight: "600",
+          }}
+        >
+          Moments in focus
+        </p>
 
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
               <Timer />
-              <a href="/camera" className="button button text-purple-700">
+              <a
+                href="/camera"
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "900",
+                  fontSize: "24px",
+                  letterSpacing: "-1px",
+                  background: "none",
+                  border: "2px solid #85189b",
+                  padding: "12px 24px",
+                  borderRadius: "12px",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
+                }}
+              >
                 Take a picture
               </a>
-              <a href="/profile" className="button button">
+              <a
+                href="/profile"
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "900",
+                  fontSize: "24px",
+                  letterSpacing: "-1px",
+                  background: "none",
+                  border: "2px solid #85189b",
+                  padding: "12px 24px",
+                  borderRadius: "12px",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
+                }}
+              >
                 View Profile
               </a>
-              <a href="/leaderboard" className="button button">
+              <a
+                href="/leaderboard"
+                style={{
+                  color: "#ffffff",
+                  fontWeight: "900",
+                  fontSize: "24px",
+                  letterSpacing: "-1px",
+                  background: "none",
+                  border: "2px solid #85189b",
+                  padding: "12px 24px",
+                  borderRadius: "12px",
+                  cursor: "pointer",
+                  textTransform: "uppercase",
+                }}
+              >
                 View Leaderboard
               </a>
             </div>

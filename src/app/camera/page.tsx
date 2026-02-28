@@ -1,11 +1,14 @@
-"use client";
+'use client';
 import AuthWrapper from "@/components/AuthWrapper";
 import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CameraPage() {
   const camera = useRef(null);
   const [image, setImage] = useState("");
+  const router = useRouter();
 
   return (
     <AuthWrapper>
@@ -36,6 +39,9 @@ export default function CameraPage() {
           >
             {image ? "Submit" : "Switch camera"}
           </button>
+
+            <button style={{ padding: 10 }} onClick={() => {router.push('/')}}>Back</button> 
+
         </div>
         <div
           style={{
