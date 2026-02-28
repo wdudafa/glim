@@ -2,6 +2,7 @@ import { auth0 } from "@/lib/auth0";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import Profile from "@/components/Profile";
+import Timer from "@/components/timer";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -15,8 +16,8 @@ export default async function Home() {
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-              <h1>5:53:29 till next image</h1>
-              <a href="/camera" className="button button">
+              <Timer />
+              <a href="/camera" className="button button text-purple-700">
                 Take a picture
               </a>
               <a href="/profile" className="button button">
