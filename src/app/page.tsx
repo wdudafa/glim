@@ -10,19 +10,19 @@ export default async function Home() {
   return (
     <div className="app-container">
       <div className="main-card-wrapper">
-        <img
-          src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png"
-          alt="Auth0 Logo"
-          className="auth0-logo"
-        />
-        <h1 className="main-title">Next.js + Auth0</h1>
-        
+        <h1 className="main-title">Glim</h1>
+
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-              <p className="logged-in-message">✅ Successfully logged in!</p>
               <Profile />
-              <LogoutButton />
+              <h1>5:53:29 till next image</h1>
+              <a href="/camera" className="button button">
+                Take a picture
+              </a>
+              <a href="/profile" className="button button">
+                View Profile
+              </a>
             </div>
           ) : (
             <>

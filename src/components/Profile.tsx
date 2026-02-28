@@ -29,7 +29,6 @@ export default function Profile() {
         }}
       />
       <h2 className="profile-name">{user.name}</h2>
-      <p className="profile-email">{user.email}</p>
     </div>
   );
 }
