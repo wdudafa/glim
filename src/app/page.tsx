@@ -29,7 +29,7 @@ export default async function Home() {
           ) : (
             <>
               <p className="action-text">
-                Welcome! Please log in to access your protected content.
+                Welcome to Glim, please login to continue.
               </p>
               <LoginButton />
             </>
