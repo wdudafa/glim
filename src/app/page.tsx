@@ -1,90 +1,39 @@
-const flights: string[][] = [
-  ["AIBD", "Miami"],
-  ["SDTS", "London"],
-  ["STET", "Madagascar"],
-];
+import { auth0 } from "@/lib/auth0";
+import LoginButton from "@/components/LoginButton";
+import LogoutButton from "@/components/LogoutButton";
+import Profile from "@/components/Profile";
 
-export type FlightInformation = {
-  id: string;
-  destination: string;
-  airline: string;
-  eta: string;
-};
+export default async function Home() {
+  const session = await auth0.getSession();
+  const user = session?.user;
 
-const GatwickFlightInformation: FlightInformation[] = [
-  {
-    id: "SDTS",
-    destination: "London",
-    airline: "British Airways",
-    eta: "14:30",
-  },
-  {
-    id: "STET",
-    destination: "Madagascar",
-    airline: "Air Madagascar",
-    eta: "16:45",
-  },
-  {
-    id: "AIBD",
-    destination: "Miami",
-    airline: "American Airlines",
-    eta: "18:00",
-  },
-];
-
-export default function Home() {
   return (
-    <main className="flex min-h-screen w-full flex-row items-center justify-between">
-      <div className="flex-col border-5 border-red-500 w-1/2 items-center min-h-screen justify-center">
-        <div className="flex border-5 border-red-600 justify-center items-center w-full">
-          <div className="flex border-5 border-red-600 justify-center items-center w-full">
-            Flignt No
-          </div>
-          <div className="flex border-5 border-red-600 justify-center items-center w-full">
-            Destination
-          </div>
-          <div className="flex border-5 border-red-600 justify-center items-center w-full">
-            Airline
-          </div>
-          <div className="flex border-5 border-red-600 justify-center items-center w-full">
-            ETA
-          </div>
+    <div className="app-container">
+      <div className="main-card-wrapper">
+        <img
+          src="https://cdn.auth0.com/quantum-assets/dist/latest/logos/auth0/auth0-lockup-en-ondark.png"
+          alt="Auth0 Logo"
+          className="auth0-logo"
+        />
+        <h1 className="main-title">Next.js + Auth0</h1>
+        
+        <div className="action-card">
+          {user ? (
+            <div className="logged-in-section">
+              <p className="logged-in-message">✅ Successfully logged in!</p>
+              <Profile />
+              <LogoutButton />
+            </div>
+          ) : (
+            <>
+              <p className="action-text">
+                Welcome! Please log in to access your protected content.
+              </p>
+              <LoginButton />
+            </>
+          )}
         </div>
-        <ul className="w-full">
-          {GatwickFlightInformation.map((flight) => (
-            <li
-              key={flight.id}
-              className="flex border-5 border-green-600 justify-center items-center w-full"
-            >
-              <div className="flex w-1/4 items-center justify-center border-5 border-green-600">
-                {flight.id}
-              </div>
-              <div className="flex w-1/4 items-center justify-center border-5 border-green-600">
-                {flight.destination}
-              </div>
-              <div className="flex w-1/4 items-center justify-center border-5 border-green-600">
-                {flight.airline}
-              </div>
-              <div className="flex w-1/4 items-center justify-center border-5 border-green-600">
-                {flight.eta}
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
-
-      <div className="flex border-5 border-red-500 w-1/2 items-center min-h-screen justify-center">
-        <ul className="w-full">
-          {GatwickFlightInformation.map((flight) => (
-            <li
-              key={flight.id}
-              className="flex border-5 border-green-600 justify-center items-center w-full"
-            >
-              {flight.id} {flight.destination}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </main>
+    </div>
   );
 }

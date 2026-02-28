@@ -8,27 +8,23 @@ import {
   TableRow,
 } from "@mui/material";
 
-function createData(
-  rank: number,
-  name: string,
-  points: number,
-  change: number,
-) {
-  return { rank, name, points, change };
+function createData(name: string, points: number, change: number) {
+  return { name, points, change };
 }
 
-const rows = [createData(1, "Me", 1, 1)];
+const rows = [createData("User", 1, 1)];
 
 for (let i = 0; i < 100; i++) {
   rows.push(
     createData(
-      i + 2,
       `User${i + 1}`,
       Math.floor(Math.random() * 1000),
-      Math.floor(Math.random() * 20) - 10,
+      Math.floor(Math.random() * 5),
     ),
   );
 }
+
+rows.sort((a, b) => b.points - a.points);
 
 export default function Leaderboard() {
   return (
@@ -93,14 +89,14 @@ export default function Leaderboard() {
               color: "white",
             }}
           >
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <TableRow key={row.name}>
                 <TableCell
                   sx={{
                     color: "white",
                   }}
                 >
-                  {row.rank}
+                  {index + 1}
                 </TableCell>
                 <TableCell
                   align="right"
