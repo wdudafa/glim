@@ -1,11 +1,16 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
+import { GoogleGenAI } from "@google/genai";
 import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
 
 export default function CameraPage() {
   const camera = useRef(null);
   const [image, setImage] = useState("");
+  const prompt = "pen";
+  const ai = new GoogleGenAI({
+    apiKey: "AIzaSyDNbFmTMgUdo8WAAfTvmZy6yZYm_w3G_AQ",
+  });
 
   return (
     <AuthWrapper>
@@ -26,11 +31,29 @@ export default function CameraPage() {
           </button>
           <button
             style={{ padding: 10 }}
-            onClick={() => {
+            onClick={async () => {
               if (camera.current) {
                 camera.current.switchCamera();
               } else {
-                // TODO Submit image
+                const base64ImageFile = image.split(",")[1] || image;
+
+                const contents = [
+                  {
+                    inlineData: {
+                      mimeType: "image/jpeg",
+                      data: base64ImageFile,
+                    },
+                  },
+                  {
+                    text: `Replying using either true of false, would you say that this image is a photo of ${prompt}`,
+                  },
+                ];
+
+                const response = await ai.models.generateContent({
+                  model: "gemini-3-flash-preview",
+                  contents: contents,
+                });
+                console.log(response.text);
               }
             }}
           >
