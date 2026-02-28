@@ -1,8 +1,12 @@
 'use client';
 import React, { useEffect, useState } from "react";
 
-export default function Timer() {
-  const [time, setTime] = useState(120);
+export type FIBBlank = {
+  time: number; 
+};
+
+export default function Timer({ timeLeft }: { timeLeft: number }) {
+  const [time, setTime] = useState(timeLeft);
 
   useEffect(() => {
     const timer = setInterval(() => {

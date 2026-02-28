@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Timer from "@/components/timer";
 
 export default function CameraPage() {
   const camera = useRef(null);
@@ -16,8 +17,9 @@ export default function CameraPage() {
   const router = useRouter();
 
   return (
-    <AuthWrapper>
-      <div>
+    <AuthWrapper >
+      <div className="flex flex-col items-center justify-center h-screen gap-4">
+        <Timer timeLeft={600}></Timer>
         <div>
           <button
             style={{ padding: 10 }}
