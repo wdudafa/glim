@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Home() {
+export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center w-full h-screen">
       <div className="p-10 flex items-center justify-center ">
