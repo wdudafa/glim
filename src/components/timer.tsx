@@ -1,18 +1,21 @@
 'use client';
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-export type FIBBlank = {
-  time: number; 
-};
 
-export default function Timer({ timeLeft }: { timeLeft: number }) {
+
+export default function Timer({ timeLeft, camera }: { timeLeft: number, camera: string }) {
   const [time, setTime] = useState(timeLeft);
+  const router = useRouter(); 
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
-          return 120;
+          if (camera) {
+            router.push('/'); 
+          }
+          return 120
         }
         return prevTime - 1;
       });

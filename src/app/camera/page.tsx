@@ -19,7 +19,7 @@ export default function CameraPage() {
   return (
     <AuthWrapper >
       <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <Timer timeLeft={600}></Timer>
+        <Timer timeLeft={600} camera="true"></Timer>
         <div>
           <button
             style={{ padding: 10 }}
