@@ -3,6 +3,8 @@ import AuthWrapper from "@/components/AuthWrapper";
 import { GoogleGenAI } from "@google/genai";
 import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CameraPage() {
   const camera = useRef(null);
@@ -11,6 +13,7 @@ export default function CameraPage() {
   const ai = new GoogleGenAI({
     apiKey: "AIzaSyDNbFmTMgUdo8WAAfTvmZy6yZYm_w3G_AQ",
   });
+  const router = useRouter();
 
   return (
     <AuthWrapper>
@@ -58,6 +61,15 @@ export default function CameraPage() {
             }}
           >
             {image ? "Submit" : "Switch camera"}
+          </button>
+
+          <button
+            style={{ padding: 10 }}
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            Back
           </button>
         </div>
         <div
