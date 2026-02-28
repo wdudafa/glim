@@ -40,7 +40,7 @@ export default async function Home() {
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-              <Timer />
+            <Timer timeLeft={120} />
               <a
                 href="/camera"
                 style={{
