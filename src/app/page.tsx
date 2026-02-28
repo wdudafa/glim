@@ -1,8 +1,10 @@
+'use server'
 import { auth0 } from "@/lib/auth0";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import Profile from "@/components/Profile";
 import Timer from "@/components/timer";
+import getCurrentObject from "@/hooks/itemAPI";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -40,7 +42,8 @@ export default async function Home() {
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-            <Timer timeLeft={120} camera="false" />
+            <Timer timeLeft={(await getCurrentObject()).rotationMinutes * 60} camera="false" />
+            <h2>Item to find! {(await getCurrentObject()).item}!</h2>
               <a
                 href="/camera"
                 style={{
