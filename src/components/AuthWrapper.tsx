@@ -36,18 +36,18 @@ export default function AuthWrapper({
           backgroundColor: "white",
           position: "absolute",
           top: 20,
-          width: 230,
+          width: 190,
         }}
       />
       <div>
         <div
           style={{
             position: "absolute",
-            padding: 10,
+            padding: 5,
             fontSize: 24,
             top: 20,
             left: 20,
-            width: 230,
+            width: 190,
           }}
         >
           <LogoutButton />

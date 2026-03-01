@@ -1,7 +1,7 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
 import { useRef, useState } from "react";
-import { Camera } from "react-camera-pro";
+import { Camera, CameraType } from "react-camera-pro";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Timer from "@/components/timer";
@@ -13,26 +13,13 @@ import {
   CiTrophy,
   CiUndo,
 } from "react-icons/ci";
+import { buttonStyle } from "@/util/buttonStyle";
 
 export default function CameraPage() {
-  const camera = useRef(null);
+  const camera = useRef<CameraType | null>(null);
   const [image, setImage] = useState("");
   const prompt = "pen";
   const router = useRouter();
-
-  const buttonStyle: React.CSSProperties = {
-    padding: "10px",
-    borderRadius: "50%",
-    border: "none",
-    backgroundColor: "#ffffff",
-    cursor: "pointer",
-    fontSize: "18px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "80px",
-    height: "80px",
-  };
 
   return (
     <AuthWrapper>
@@ -53,7 +40,7 @@ export default function CameraPage() {
             gap: "10px",
             alignItems: "center",
             position: "absolute",
-            bottom: "100px",
+            bottom: "80px",
           }}
         >
           <button
@@ -79,15 +66,8 @@ export default function CameraPage() {
           </button>
           <div
             style={{
-              padding: "10px",
-              borderRadius: 30,
-              border: "none",
-              backgroundColor: "#ffffff",
-              cursor: "pointer",
-              fontSize: "18px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              ...buttonStyle,
+              padding: "0px 10px",
             }}
           >
             <Timer timeLeft={600} camera={true}></Timer>
@@ -102,14 +82,14 @@ export default function CameraPage() {
                 const base64ImageFile = image.split(",")[1] || image;
 
                 try {
-                  const response = await fetch('/api/gemini', {
-                    method: 'POST',
+                  const response = await fetch("/api/gemini", {
+                    method: "POST",
                     headers: {
-                      'Content-Type': 'application/json',
+                      "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                       imageData: base64ImageFile,
-                      mimeType: 'image/jpeg',
+                      mimeType: "image/jpeg",
                       prompt,
                     }),
                   });
@@ -118,10 +98,10 @@ export default function CameraPage() {
                   if (response.ok) {
                     console.log(data.result);
                   } else {
-                    console.error('API error:', data.error);
+                    console.error("API error:", data.error);
                   }
                 } catch (error) {
-                  console.error('Failed to analyze image:', error);
+                  console.error("Failed to analyze image:", error);
                 }
               }
             }}
