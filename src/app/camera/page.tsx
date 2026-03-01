@@ -1,6 +1,6 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Timer from "@/components/timer";
 import {
@@ -115,6 +115,7 @@ export default function CameraPage() {
           addEntryToLeaderboard(timeCompleted);
         } else {
           alert("Could not find the object. Try again!");
+          setImage(null);
         }
       } else {
         console.error(data.error);
@@ -167,6 +168,19 @@ export default function CameraPage() {
       >
         <div
           style={{
+            ...buttonStyle,
+            zIndex: 2,
+            padding: "0px 10px",
+            flexDirection: "column",
+          }}
+        >
+          <h1 style={{
+            fontSize: 16
+          }}>{prompt}</h1>
+          <Timer timeLeft={600} camera />
+        </div>
+        <div
+          style={{
             zIndex: 2,
             display: "flex",
             gap: "10px",
@@ -192,15 +206,6 @@ export default function CameraPage() {
             {image ? <CiRedo size={35} /> : <CiCamera size={35} />}
           </button>
 
-          <div
-            style={{
-              ...buttonStyle,
-              padding: "0px 10px",
-            }}
-          >
-            <Timer timeLeft={600} camera />
-          </div>
-
           <button
             style={buttonStyle}
             onClick={async () => {
@@ -224,8 +229,8 @@ export default function CameraPage() {
 
         <div
           style={{
-            width: "50%",
-            height: "60%",
+            width: "95%",
+            height: "70%",
             position: "absolute",
             top: "50%",
             left: "50%",

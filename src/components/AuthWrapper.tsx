@@ -50,7 +50,6 @@ export default function AuthWrapper({
             width: 190,
           }}
         >
-          <LogoutButton />
         </div>
       </div>
       {children}
