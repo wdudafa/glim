@@ -1,9 +1,6 @@
 "use client";
 
 import { useUser } from "@auth0/nextjs-auth0";
-import { Button } from "@mui/material";
-import { CiLogout } from "react-icons/ci";
-import LogoutButton from "./LogoutButton";
 
 export default function AuthWrapper({
   children,
