@@ -1,8 +1,6 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
-import { useRef, useState } from "react";
-import { Camera, CameraType } from "react-camera-pro";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Timer from "@/components/timer";
 import {
@@ -16,10 +14,61 @@ import {
 import { buttonStyle } from "@/util/buttonStyle";
 
 export default function CameraPage() {
-  const camera = useRef<CameraType | null>(null);
-  const [image, setImage] = useState("");
-  const prompt = "pen";
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [image, setImage] = useState<string | null>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+
   const router = useRouter();
+  const prompt = "pen";
+
+  useEffect(() => {
+    const startCamera = async () => {
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode },
+        });
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = mediaStream;
+        }
+
+        setStream(mediaStream);
+      } catch (err) {
+        console.error("Camera error:", err);
+      }
+    };
+
+    startCamera();
+
+    return () => {
+      stream?.getTracks().forEach((track) => track.stop());
+    };
+  }, [facingMode]);
+
+  const takePhoto = () => {
+    if (!videoRef.current || !canvasRef.current) return;
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    if (!context) return;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    context.drawImage(video, 0, 0);
+
+    const dataUrl = canvas.toDataURL("image/jpeg");
+    setImage(dataUrl);
+  };
+
+  const switchCamera = () => {
+    setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
+  };
 
   return (
     <AuthWrapper>
@@ -36,48 +85,43 @@ export default function CameraPage() {
           style={{
             zIndex: 2,
             display: "flex",
-            flexDirection: "row",
             gap: "10px",
             alignItems: "center",
             position: "absolute",
             bottom: "80px",
           }}
         >
-          <button
-            style={buttonStyle}
-            onClick={() => {
-              router.push("/");
-            }}
-          >
+          <button style={buttonStyle} onClick={() => router.push("/")}>
             <CiCircleChevLeft size={35} />
           </button>
+
           <button
             style={buttonStyle}
             onClick={() => {
-              if (camera.current) {
-                const photo = camera.current.takePhoto();
-                setImage(photo);
+              if (!image) {
+                takePhoto();
               } else {
-                setImage("");
+                setImage(null);
               }
             }}
           >
             {image ? <CiRedo size={35} /> : <CiCamera size={35} />}
           </button>
+
           <div
             style={{
               ...buttonStyle,
               padding: "0px 10px",
             }}
           >
-            <Timer timeLeft={600} camera={true}></Timer>
+            <Timer timeLeft={600} camera />
           </div>
 
           <button
             style={buttonStyle}
             onClick={async () => {
-              if (camera.current) {
-                camera.current.switchCamera();
+              if (!image) {
+                switchCamera();
               } else {
                 const base64ImageFile = image.split(",")[1] || image;
 
@@ -98,56 +142,63 @@ export default function CameraPage() {
                   if (response.ok) {
                     console.log(data.result);
                   } else {
-                    console.error("API error:", data.error);
+                    console.error(data.error);
                   }
                 } catch (error) {
-                  console.error("Failed to analyze image:", error);
+                  console.error(error);
                 }
               }
             }}
           >
             {image ? <CiCircleCheck size={35} /> : <CiUndo size={35} />}
           </button>
+
           <button
             style={buttonStyle}
-            onClick={() => {
-              router.push("/leaderboard");
-            }}
+            onClick={() => router.push("/leaderboard")}
           >
             <CiTrophy size={35} />
           </button>
         </div>
+
         <div
           style={{
             width: "50%",
             height: "60%",
-            zIndex: 1,
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "30px",
             overflow: "hidden",
+            backgroundColor: "black",
           }}
         >
           {!image ? (
-            <Camera
-              ref={camera}
-              errorMessages={{
-                noCameraAccessible: undefined,
-                permissionDenied: undefined,
-                switchCamera: undefined,
-                canvas: undefined,
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
               }}
             />
           ) : (
             <img
-              style={{ width: "100%", height: "100%" }}
               src={image}
-              alt="Image preview"
+              alt="Preview"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
             />
           )}
         </div>
+
+        <canvas ref={canvasRef} style={{ display: "none" }} />
       </div>
     </AuthWrapper>
   );

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       contents: contents,
     });
 
-    return NextResponse.json({ result: response.text });
+    return NextResponse.json({ result: response.text?.toLowerCase() });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
