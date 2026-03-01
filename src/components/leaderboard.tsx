@@ -26,6 +26,7 @@ export default async function Leaderboard() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center bg-zinc-950 p-10 font-mono text-yellow-400">
+        <h1 className="text-4xl font-bold text-white mb-6">Leaderboard</h1>
       <div className="w-full max-w-5xl overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl mt-40">
         
         <div className="flex w-full border-b border-zinc-800 bg-zinc-800/50 py-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
@@ -41,25 +42,19 @@ export default async function Leaderboard() {
               className="group flex items-center py-4 transition-colors hover:bg-zinc-800/30"
             >
               <div className="w-1/3 px-6 font-bold text-white group-hover:text-yellow-400">
-                {(index + 1).toString().padStart(2, '0')}
+                #{(index + 1).toString().padStart(2)}
               </div>
               
               <div className="w-1/3 px-6 uppercase truncate">
-                {player.name || "Anonymous"}
+                {player.name}
               </div>
               
               <div className="w-1/3 px-6 text-zinc-300 group-hover:text-white">
-                {player.total_seconds} <span className="text-[10px] text-zinc-500">SEC</span>
+                {player.total_seconds} <span className="text-[20px] text-zinc-500">s</span>
               </div>
             </li>
           ))}
         </ul>
-        
-        {scores.length === 0 && (
-          <div className="py-20 text-center text-zinc-600 uppercase tracking-widest text-sm">
-            No data transmissions received
-          </div>
-        )}
       </div>
     </main>
   );
