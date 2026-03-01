@@ -12,14 +12,14 @@ export default function CameraPage() {
   const [image, setImage] = useState("");
   const prompt = "pen";
   const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey: 'AIzaSyAnqPkQhm92x-486yRx4ypQO4_5btmYnxc',
   });
   const router = useRouter();
 
   return (
     <AuthWrapper >
       <div className="flex flex-col items-center justify-center h-screen gap-4">
-        <Timer timeLeft={600} camera="true"></Timer>
+        <Timer timeLeft={300} camera="true"></Timer>
         <div>
           <button
             style={{ padding: 10 }}

@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 
-
 export default function Timer({ timeLeft, camera }: { timeLeft: number, camera: string }) {
   const [time, setTime] = useState(timeLeft);
   const router = useRouter(); 
-
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
@@ -15,7 +14,7 @@ export default function Timer({ timeLeft, camera }: { timeLeft: number, camera: 
           if (camera) {
             router.push('/'); 
           }
-          return 120
+          return 60
         }
         return prevTime - 1;
       });

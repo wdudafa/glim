@@ -43,7 +43,7 @@ export default async function Home() {
           {user ? (
             <div className="logged-in-section">
             <Timer timeLeft={(await getCurrentObject()).rotationMinutes * 60} camera="false" />
-            <h2>Item to find! {(await getCurrentObject()).item}!</h2>
+            <h2>Item to find: {(await getCurrentObject()).item}!</h2>
               <a
                 href="/camera"
                 style={{
