@@ -2,113 +2,85 @@
 import { auth0 } from "@/lib/auth0";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
-import Profile from "@/components/Profile";
 import Timer from "@/components/timer";
 import getCurrentObject from "@/hooks/itemAPI";
+import Link from "next/link";
 
 export default async function Home() {
   const session = await auth0.getSession();
   const user = session?.user;
+  const currentObject = await getCurrentObject();
 
   return (
-    <div className="app-container">
-      <div className="main-card-wrapper">
-        <h1
-          style={{
-            fontSize: "64px",
-            fontWeight: "900",
-            margin: "0",
-            color: "#ffffff",
-            letterSpacing: "-4px",
-            background: "linear-gradient(to bottom, #fff, #666)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
-        >
-          Glim
-        </h1>
-        <p
-          style={{
-            color: "#666",
-            textTransform: "uppercase",
-            fontSize: "12px",
-            letterSpacing: "2px",
-            fontWeight: "600",
-          }}
-        >
-          Moments in focus
-        </p>
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-black-550 p-6 font-mono selection:bg-yellow-400 selection:text-black">
+      <div className="flex w-full max-w-2xl flex-col items-center space-y-8 text-center">
+        <div className="space-y-2">
+          <h1 className="bg-gradient-to-b from-white to-black-200 bg-clip-text text-7xl font-black tracking-tighter text-transparent sm:text-8xl">
+            Glim
+          </h1>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+            Find it! Snap it!
+          </p>
+        </div>
 
-        <div className="action-card">
+        <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-sm">
           {user ? (
-            <div className="logged-in-section">
-              <Timer
-                timeLeft={(await getCurrentObject()).rotationMinutes * 60}
-                camera={false}
-              />
-              <h2>Item to find: {(await getCurrentObject()).item}!</h2>
-              <a
-                href="/camera"
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "900",
-                  fontSize: "24px",
-                  letterSpacing: "-1px",
-                  background: "none",
-                  border: "2px solid #85189b",
-                  padding: "12px 24px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  textTransform: "uppercase",
-                }}
-              >
-                Take a picture
-              </a>
-              <a
-                href="/profile"
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "900",
-                  fontSize: "24px",
-                  letterSpacing: "-1px",
-                  background: "none",
-                  border: "2px solid #85189b",
-                  padding: "12px 24px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  textTransform: "uppercase",
-                }}
-              >
-                View Profile
-              </a>
-              <a
-                href="/leaderboard"
-                style={{
-                  color: "#ffffff",
-                  fontWeight: "900",
-                  fontSize: "24px",
-                  letterSpacing: "-1px",
-                  background: "none",
-                  border: "2px solid #85189b",
-                  padding: "12px 24px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  textTransform: "uppercase",
-                }}
-              >
-                View Leaderboard
-              </a>
+            <div className="flex flex-col items-center space-y-8">
+              <div className="space-y-4">
+                <Timer
+                  timeLeft={currentObject.rotationMinutes * 60}
+                  camera={false}
+                />
+                <h2 className="text-xl font-bold uppercase tracking-tight text-white">
+                  Target:{" "}
+                  <span className="text-yellow-400">{currentObject.item}</span>
+                </h2>
+              </div>
+
+              <div className="grid w-full gap-4 sm:grid-cols-1">
+                <Link
+                  href="/camera"
+                  className="w-full rounded-xl border-2 border-purple-800 py-4 text-xl font-black uppercase tracking-tighter text-white transition-all hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(133,24,155,0.3)] active:scale-95"
+                >
+                  Take a picture
+                </Link>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <Link
+                    href="/profile"
+                    className="flex justify-center rounded-xl border border-zinc-700 py-3 text-sm font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/leaderboard"
+                    className="flex justify-center rounded-xl border border-zinc-700 py-3 text-sm font-bold uppercase tracking-widest text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+                  >
+                    Leaderboard
+                  </Link>
+                </div>
+
+                <div className="pt-4 border-t border-zinc-800 w-full">
+                  <LogoutButton />
+                </div>
+              </div>
             </div>
           ) : (
-            <>
-              <p className="action-text">
-                Welcome to Glim, please login to continue.
+            <div className="space-y-6 py-10">
+              <p className="text-zinc-400 text-sm uppercase tracking-wider">
+                Access Denied. Llog in
               </p>
-              <LoginButton />
-            </>
+              <div className="inline-block scale-125">
+                <LoginButton />
+              </div>
+            </div>
           )}
         </div>
+
+        <div className="text-[10px] uppercase text-zinc-700">
+          Logged in as: {user ? user.email : "External Node"}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
