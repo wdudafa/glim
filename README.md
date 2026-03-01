@@ -1,11 +1,12 @@
-#GLIM! ✈️
-##Hack Sussex 2026
+# GLIM! ✈️
+
+## Hack Sussex 2026
 Harry, Wari, Josha, Lucas, Aaron
 
-##An interactive scavenger hunt! 🌳
+## An interactive scavenger hunt! 🌳
 Players are prompted to find an item and take a picture of it. Google Gemini then analyses the image and determines whether or not the item matches the prompt. Player's fastest times are tracked on a global leaderboard and their top 10 speeds are tracked on their personal score board.
 
-##Tech Stack 🤖
+## Tech Stack 🤖
 Next.js, React.js, TypeScript, Tailwindcss, Supabase
 
 
