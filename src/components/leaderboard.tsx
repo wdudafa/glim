@@ -8,23 +8,14 @@ interface Score {
 
 async function getLeaderboardData(): Promise<Score[]> {
   const { data, error } = await supabasePublic
-    .from("users_times")
-    .select("user_email, name, total_seconds")
-    .order("total_seconds", { ascending: true });
+    .rpc('get_leaderboard').order("total_seconds", { ascending: true });
 
   if (error) {
     console.error("Error fetching leaderboard:", error);
     return [];
   }
 
-  const seenEmails = new Set<string>();
-  const lowestScores = data.filter((score) => {
-    if (seenEmails.has(score.user_email)) return false;
-    seenEmails.add(score.user_email);
-    return true;
-  });
-
-  return lowestScores as Score[];
+  return data as Score[];
 }
 
 export default async function TopScore() {
