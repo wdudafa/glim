@@ -1,4 +1,3 @@
-// components/Leaderboard.tsx
 import { supabasePublic } from "@/lib/DatabaseData";
 
 interface ScoreEntry {
@@ -21,7 +20,7 @@ async function getLeaderboardData(): Promise<ScoreEntry[]> {
   return data as ScoreEntry[];
 }
 
-export default async function Leaderboard() {
+export default async function TopScore() {
   const scores = await getLeaderboardData();
 
   return (
@@ -32,7 +31,7 @@ export default async function Leaderboard() {
         <div className="flex w-full border-b border-zinc-800 bg-zinc-800/50 py-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
           <div className="w-1/3 px-6">Rank</div>
           <div className="w-1/3 px-6">Name</div>
-          <div className="w-1/3 px-6 text-right sm:text-left">Best Effort</div>
+          <div className="w-1/3 px-6 text-right sm:text-left">High Score</div>
         </div>
 
         <ul className="w-full divide-y divide-zinc-800">
