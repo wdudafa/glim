@@ -68,7 +68,7 @@ export default async function Home() {
           ) : (
             <div className="space-y-6 py-10">
               <p className="text-zinc-400 text-sm uppercase tracking-wider">
-                Access Denied. Llog in
+                Login to get going!
               </p>
               <div className="inline-block scale-125">
                 <LoginButton />
@@ -77,9 +77,11 @@ export default async function Home() {
           )}
         </div>
 
-        <div className="text-[15px] uppercase text-white">
-          Logged in as: {user ? user.name : "External Node"}
-        </div>
+        {user ? (
+          <div className="text-[15px] uppercase text-white">
+            Logged in as: {user ? user.name : "External Node"}
+          </div>
+        ) : null}
       </div>
     </main>
   );
