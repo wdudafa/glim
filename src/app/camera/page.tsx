@@ -1,6 +1,5 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
-import { GoogleGenAI } from "@google/genai";
 import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";
 import Link from "next/link";
@@ -19,9 +18,6 @@ export default function CameraPage() {
   const camera = useRef(null);
   const [image, setImage] = useState("");
   const prompt = "pen";
-  const ai = new GoogleGenAI({
-    apiKey: "AIzaSyAnqPkQhm92x-486yRx4ypQO4_5btmYnxc",
-  });
   const router = useRouter();
 
   const buttonStyle: React.CSSProperties = {
@@ -94,7 +90,7 @@ export default function CameraPage() {
               alignItems: "center",
             }}
           >
-            <Timer timeLeft={600} camera="true"></Timer>
+            <Timer timeLeft={600} camera={true}></Timer>
           </div>
 
           <button
@@ -105,23 +101,28 @@ export default function CameraPage() {
               } else {
                 const base64ImageFile = image.split(",")[1] || image;
 
-                const contents = [
-                  {
-                    inlineData: {
-                      mimeType: "image/jpeg",
-                      data: base64ImageFile,
+                try {
+                  const response = await fetch('/api/gemini', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
                     },
-                  },
-                  {
-                    text: `Replying using either true of false, would you say that this image is a photo of ${prompt}`,
-                  },
-                ];
+                    body: JSON.stringify({
+                      imageData: base64ImageFile,
+                      mimeType: 'image/jpeg',
+                      prompt,
+                    }),
+                  });
 
-                const response = await ai.models.generateContent({
-                  model: "gemini-3-flash-preview",
-                  contents: contents,
-                });
-                console.log(response.text);
+                  const data = await response.json();
+                  if (response.ok) {
+                    console.log(data.result);
+                  } else {
+                    console.error('API error:', data.error);
+                  }
+                } catch (error) {
+                  console.error('Failed to analyze image:', error);
+                }
               }
             }}
           >
