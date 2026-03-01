@@ -5,9 +5,16 @@ import Profile from "@/components/Profile";
 export default function ProfilePage() {
   return (
     <AuthWrapper>
-      <div>
-        <Profile></Profile>
-        <LogoutButton></LogoutButton>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20,
+        }}
+      >
+        <Profile />
+        <LogoutButton />
       </div>
     </AuthWrapper>
   );
