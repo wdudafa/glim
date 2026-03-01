@@ -3,7 +3,7 @@ import { auth0 } from "@/lib/auth0";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import Timer from "@/components/timer";
-import getCurrentObject from "@/hooks/itemAPI";
+import { getCurrentObject } from "@/hooks/itemAPI";
 import Link from "next/link";
 
 export default async function Home() {
@@ -12,10 +12,11 @@ export default async function Home() {
   const currentObject = await getCurrentObject();
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-black-550 p-6 font-mono selection:bg-yellow-400 selection:text-black">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-black p-6 font-mono selection:bg-yellow-400 selection:text-black">
       <div className="flex w-full max-w-2xl flex-col items-center space-y-8 text-center">
+        
         <div className="space-y-2">
-          <h1 className="bg-gradient-to-b from-white to-black-200 bg-clip-text text-7xl font-black tracking-tighter text-transparent sm:text-8xl">
+          <h1 className="bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-7xl font-black tracking-tighter text-transparent sm:text-8xl">
             Glim
           </h1>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
@@ -28,7 +29,7 @@ export default async function Home() {
             <div className="flex flex-col items-center space-y-8">
               <div className="space-y-4">
                 <Timer
-                  timeLeft={currentObject.rotationMinutes * 60}
+                  switchesAt={currentObject.switchesAt}
                   camera={false}
                 />
                 <h2 className="text-xl font-bold uppercase tracking-tight text-white">
@@ -37,10 +38,10 @@ export default async function Home() {
                 </h2>
               </div>
 
-              <div className="grid w-full gap-4 sm:grid-cols-1">
+              <div className="grid w-full gap-4">
                 <Link
                   href="/camera"
-                  className="w-full rounded-xl border-2 border-purple-800 py-4 text-xl font-black uppercase tracking-tighter text-white transition-all hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(133,24,155,0.3)] active:scale-95"
+                  className="w-full rounded-xl border-2 border-purple-800 py-4 text-xl font-black uppercase tracking-tighter text-white transition-all hover:bg-purple-800 hover:shadow-[0_0_20px_rgba(133,24,155,0.3)] active:scale-95 text-center"
                 >
                   Take a picture
                 </Link>
@@ -68,7 +69,7 @@ export default async function Home() {
           ) : (
             <div className="space-y-6 py-10">
               <p className="text-zinc-400 text-sm uppercase tracking-wider">
-                Access Denied. Llog in
+                Access Denied. Please log in.
               </p>
               <div className="inline-block scale-125">
                 <LoginButton />
@@ -77,8 +78,8 @@ export default async function Home() {
           )}
         </div>
 
-        <div className="text-[15px] uppercase text-white">
-          Logged in as: {user ? user.name : "External Node"}
+        <div className="text-[15px] uppercase tracking-widest text-gray-200">
+          Logged in as: <span className="text-grey-400">{user ? user.name : "Guest"}</span>
         </div>
       </div>
     </main>
