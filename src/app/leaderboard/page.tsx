@@ -1,135 +1,87 @@
 import AuthWrapper from "@/components/AuthWrapper";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
 
-function createData(name: string, points: number, change: number) {
-  return { name, points, change };
-}
 
-const rows = [createData("User", 1, 1)];
+/*
+const flights: string[][] = [
+  ["AIBD", "Miami"],
+  ["SDTS", "London"],
+  ["STET", "Madagascar"],
+];
 
-for (let i = 0; i < 100; i++) {
-  rows.push(
-    createData(
-      `User${i + 1}`,
-      Math.floor(Math.random() * 1000),
-      Math.floor(Math.random() * 5),
-    ),
-  );
-}
+export type FlightInformation = {
+  id: string;
+  destination: string;
+  airline: string;
+  eta: string;
+};
 
-rows.sort((a, b) => b.points - a.points);
+const GatwickFlightInformation: FlightInformation[] = [
+  {
+    id: "SDTS",
+    destination: "London",
+    airline: "British Airways",
+    eta: "14:30",
+  },
+  {
+    id: "STET",
+    destination: "Madagascar",
+    airline: "Air Madagascar",
+    eta: "16:45",
+  },
+  {
+    id: "AIBD",
+    destination: "Miami",
+    airline: "American Airlines",
+    eta: "18:00",
+  },
+];
 
-export default function Leaderboard() {
+export default function Home() {
   return (
     <AuthWrapper>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-        }}
-      >
-        <h1
-          style={{
-            top: 0,
-            fontSize: "4rem",
-            position: "sticky",
-            backgroundColor: "black",
-            color: "rgb(26, 67, 132)",
-            width: "100%",
-            margin: 0,
-            padding: 0,
-            textAlign: "center",
-          }}
-        >
-          Leaderboard
-        </h1>
+<main className="flex min-h-screen w-full flex-col items-center bg-zinc-950 p-10 font-mono text-yellow-400">
+  <div className="w-full max-w-5xl overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl mt-40">
+    
+    <div className="flex w-full border-b border-zinc-800 bg-zinc-800/50 py-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
+      <div className="w-1/3 px-6">Rank</div>
+      <div className="w-1/3 px-6">Name</div>
+      <div className="w-1/3 px-6">Best Effort</div>
+    </div>
 
-        <TableContainer
-          style={{
-            position: "sticky",
-            top: 100,
-          }}
-          component={Paper}
-          sx={{
-            maxWidth: 800,
-            position: "sticky",
-          }}
+    <ul className="w-full divide-y divide-zinc-800">
+      {GatwickFlightInformation.map((flight) => (
+        <li
+          key={flight.id}
+          className="group flex items-center py-4 transition-colors hover:bg-zinc-800/30"
         >
-          <Table sx={{ maxWidth: 800 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Rank</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Points</TableCell>
-                <TableCell align="right">Change</TableCell>
-              </TableRow>
-            </TableHead>
-          </Table>
-        </TableContainer>
-
-        <TableContainer
-          component={Paper}
-          sx={{
-            maxWidth: 800,
-          }}
-        >
-          <Table sx={{ maxWidth: 800 }} aria-label="simple table">
-            <TableBody
-              sx={{
-                backgroundColor: "black",
-                color: "white",
-              }}
-            >
-              {rows.map((row, index) => (
-                <TableRow key={row.name}>
-                  <TableCell
-                    sx={{
-                      color: "white",
-                    }}
-                  >
-                    {index + 1}
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    sx={{
-                      color: "white",
-                    }}
-                  >
-                    {row.name}
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    sx={{
-                      color: "white",
-                    }}
-                  >
-                    {row.points}
-                  </TableCell>
-                  <TableCell
-                    align="right"
-                    sx={{
-                      color: "white",
-                    }}
-                  >
-                    {row.change}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
+          <div className="w-1/3 px-6 font-bold text-white group-hover:text-yellow-400">
+            {flight.id}
+          </div>
+          <div className="w-1/3 px-6 uppercase">
+            {flight.destination}
+          </div>
+          <div className="w-1/3 px-6 text-zinc-300">
+            {flight.airline}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</main>
     </AuthWrapper>
+  );}
+*/
+
+// components/Dashboard.tsx (Server Component)
+import LeaderboardList from "@/components/leaderboard";
+import TopScoreDisplay from "@/components/leaderboard";
+
+export default async function Dashboard() {
+  // Call the function directly here
+
+  return (
+    <section>
+      <TopScoreDisplay></TopScoreDisplay>
+    </section>
   );
 }
