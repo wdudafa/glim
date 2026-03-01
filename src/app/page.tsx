@@ -1,4 +1,4 @@
-'use server'
+"use server";
 import { auth0 } from "@/lib/auth0";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
@@ -42,8 +42,11 @@ export default async function Home() {
         <div className="action-card">
           {user ? (
             <div className="logged-in-section">
-            <Timer timeLeft={(await getCurrentObject()).rotationMinutes * 60} camera="false" />
-            <h2>Item to find: {(await getCurrentObject()).item}!</h2>
+              <Timer
+                timeLeft={(await getCurrentObject()).rotationMinutes * 60}
+                camera={false}
+              />
+              <h2>Item to find: {(await getCurrentObject()).item}!</h2>
               <a
                 href="/camera"
                 style={{
