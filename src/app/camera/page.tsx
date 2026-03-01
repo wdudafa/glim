@@ -175,7 +175,7 @@ export default function CameraPage() {
           }}
         >
           <h1 style={{
-            fontSize: 16
+            fontSize: 21
           }}>{prompt}</h1>
           <Timer timeLeft={600} camera />
         </div>
@@ -186,7 +186,7 @@ export default function CameraPage() {
             gap: "10px",
             alignItems: "center",
             position: "absolute",
-            bottom: "80px",
+            bottom: "60px",
           }}
         >
           <button style={buttonStyle} onClick={() => router.push("/")}>
@@ -232,7 +232,7 @@ export default function CameraPage() {
             width: "95%",
             height: "70%",
             position: "absolute",
-            top: "50%",
+            top: "55%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             borderRadius: "30px",
