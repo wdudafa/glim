@@ -25,12 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/glim-icon-alone.png" sizes="32x32" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Auth0Provider>
-          {children}
-        </Auth0Provider>
+        <Auth0Provider>{children}</Auth0Provider>
       </body>
     </html>
   );

@@ -20,9 +20,10 @@ export default function Profile() {
 
   return (
     <div
-      className="profile-card action-card"
       style={{
         ...buttonStyle,
+        flexDirection: "column",
+        borderRadius: 40,
       }}
     >
       <img
@@ -54,13 +55,27 @@ export default function Profile() {
       />
       <div
         style={{
-          flexDirection: "row",
-          paddingLeft: 20,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
           fontSize: 18,
+          padding: 5,
         }}
       >
-        <h2 className="profile-name">{user.name}</h2>
-        <p className="profile-email">{user.email}</p>
+        <h2
+          style={{
+            fontWeight: "bold",
+            fontSize: 24,
+            margin: 0,
+          }}
+        >
+          {user.name}
+        </h2>
+        <p className="profile-email" style={{ margin: 0 }}>
+          {user.email}
+        </p>
       </div>
     </div>
   );

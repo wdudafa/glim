@@ -1,9 +1,6 @@
 "use client";
 
 import { useUser } from "@auth0/nextjs-auth0";
-import { Button } from "@mui/material";
-import { CiLogout } from "react-icons/ci";
-import LogoutButton from "./LogoutButton";
 
 export default function AuthWrapper({
   children,
@@ -29,16 +26,22 @@ export default function AuthWrapper({
         justifyContent: "center",
       }}
     >
-      <img
-        src={"/glim-logo.png"}
+      <a
+        href="/"
         style={{
-          borderRadius: 30,
-          backgroundColor: "white",
           position: "absolute",
           top: 20,
           width: 190,
         }}
-      />
+      >
+        <img
+          src={"/glim-logo.png"}
+          style={{
+            borderRadius: 30,
+            backgroundColor: "white",
+          }}
+        />
+      </a>
       <div>
         <div
           style={{
@@ -49,8 +52,7 @@ export default function AuthWrapper({
             left: 20,
             width: 190,
           }}
-        >
-        </div>
+        ></div>
       </div>
       {children}
     </div>
