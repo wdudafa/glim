@@ -6,26 +6,21 @@ export interface CurrentObjectResponse {
 }
 
 export async function getCurrentObject(): Promise<CurrentObjectResponse> {
-  const itemList = await fetch(
+  const response = await fetch(
     "https://lwszddermdgmlwofpwbo.supabase.co/functions/v1/get-current-object",
+    { cache: 'no-store' }
   );
 
-  return itemList.json();
-}
-//Time Remaining = End Time - Current Clock Time
-export function calculateTimeLeft(
-  switchesAt: string | number | Date,
-): number {
-  const now = new Date();
-  const switchesTime = new Date(switchesAt);
+  if (!response.ok) {
+    throw new Error("Failed to fetch from Supabase");
+  }
 
-
-  const timeRemaining = switchesTime.getTime() - now.getTime();
-
-  return timeRemaining > 0 ? timeRemaining : 0;
+  return response.json();
 }
 
-export default async function Page() {
-  const data = await getCurrentObject();
-  return data;
+export function calculateSecondsRemaining(target: string | number | Date): number {
+  const now = new Date().getTime();
+  const endTime = new Date(target).getTime();
+  const diff = Math.floor((endTime - now) / 1000);
+  return diff > 0 ? diff : 0;
 }
