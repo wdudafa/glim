@@ -170,13 +170,17 @@ export default function CameraPage() {
           style={{
             ...buttonStyle,
             zIndex: 2,
-            padding: "0px 10px",
+            padding: "0px 20px",
             flexDirection: "column",
           }}
         >
-          <h1 style={{
-            fontSize: 21
-          }}>{prompt}</h1>
+          <h1
+            style={{
+              fontSize: 21,
+            }}
+          >
+            {prompt}
+          </h1>
           <Timer timeLeft={600} camera />
         </div>
         <div
