@@ -12,9 +12,20 @@ export async function getCurrentObject(): Promise<CurrentObjectResponse> {
 
   return itemList.json();
 }
+//Time Remaining = End Time - Current Clock Time
+export function calculateTimeLeft(
+  switchesAt: string | number | Date,
+): number {
+  const now = new Date();
+  const switchesTime = new Date(switchesAt);
+
+
+  const timeRemaining = switchesTime.getTime() - now.getTime();
+
+  return timeRemaining > 0 ? timeRemaining : 0;
+}
 
 export default async function Page() {
   const data = await getCurrentObject();
-
   return data;
 }
