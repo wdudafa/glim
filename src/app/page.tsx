@@ -1,20 +1,35 @@
-"use server";
-import { auth0 } from "@/lib/auth0";
+"use client";
 import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 import Timer from "@/components/timer";
-import { getCurrentObject } from "@/hooks/itemAPI";
+import { CurrentObjectResponse, getCurrentObject } from "@/hooks/itemAPI";
 import Link from "next/link";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useEffect, useState } from "react";
 
-export default async function Home() {
-  const session = await auth0.getSession();
-  const user = session?.user;
-  const currentObject = await getCurrentObject();
+export default function Home() {
+  const { user, isLoading } = useUser();
+  const [currentObject, setCurrentObject] =
+    useState<CurrentObjectResponse | null>(null);
+
+  useEffect(() => {
+    const updateObject = async () => {
+      const obj = await getCurrentObject();
+      setCurrentObject(obj);
+    };
+    updateObject();
+  }, []);
+
+  const updateObject = async () => {
+    console.log("updated");
+    const obj = await getCurrentObject();
+    console.log(obj);
+    setCurrentObject(obj);
+  };
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center bg-black p-6 font-mono selection:bg-yellow-400 selection:text-black">
       <div className="flex w-full max-w-2xl flex-col items-center space-y-8 text-center">
-        
         <div className="space-y-2">
           <h1 className="bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-7xl font-black tracking-tighter text-transparent sm:text-8xl">
             Glim
@@ -25,12 +40,13 @@ export default async function Home() {
         </div>
 
         <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 shadow-2xl backdrop-blur-sm">
-          {user ? (
+          {user && currentObject ? (
             <div className="flex flex-col items-center space-y-8">
               <div className="space-y-4">
                 <Timer
                   switchesAt={currentObject.switchesAt}
                   camera={false}
+                  updateObject={updateObject}
                 />
                 <h2 className="text-xl font-bold uppercase tracking-tight text-white">
                   Target:{" "}

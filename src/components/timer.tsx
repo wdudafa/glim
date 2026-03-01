@@ -6,9 +6,14 @@ import { calculateSecondsRemaining } from "@/hooks/itemAPI";
 interface TimerProps {
   switchesAt: string | number | Date;
   camera: boolean;
+  updateObject?: () => {};
 }
 
-export default function Timer({ switchesAt, camera }: TimerProps) {
+export default function Timer({
+  switchesAt,
+  camera,
+  updateObject,
+}: TimerProps) {
   const router = useRouter();
   const [time, setTime] = useState(() => calculateSecondsRemaining(switchesAt));
 
@@ -19,19 +24,21 @@ export default function Timer({ switchesAt, camera }: TimerProps) {
 
       if (remaining <= 0) {
         clearInterval(intervalId);
-        if (camera) {
-          router.push("/");
-        } else {
-          router.push("/");
+        if (updateObject) {
+          setTimeout(() => {
+            updateObject();
+          }, 1000);
         }
-        router.refresh();
+        router.push("/");
       }
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, [switchesAt, camera, router]);
 
-  const minutes = Math.floor(time / 60).toString().padStart(2, "0");
+  const minutes = Math.floor(time / 60)
+    .toString()
+    .padStart(2, "0");
   const seconds = (time % 60).toString().padStart(2, "0");
 
   return (
@@ -40,9 +47,9 @@ export default function Timer({ switchesAt, camera }: TimerProps) {
         {minutes}:{seconds}
       </p>
       <div className="mt-2 h-1 w-24 overflow-hidden rounded-full bg-gray-400">
-        <div 
+        <div
           className="h-full bg-yellow-400 transition-all duration-1000 ease-linear"
-          style={{ width: `${Math.min((time / 120) * 100, 100)}%` }}
+          style={{ width: `${Math.min((time / 120) * 200, 100)}%` }}
         />
       </div>
     </div>
