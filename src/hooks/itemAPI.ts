@@ -1,12 +1,14 @@
 export interface CurrentObjectResponse {
+  switchesAt: string | number | Date;
+  createdAt: string | number | Date;
   item: string;
   rotationMinutes: number;
-  bucket: number;
 }
 
 export async function getCurrentObject(): Promise<CurrentObjectResponse> {
-  const itemList = await fetch('https://lwszddermdgmlwofpwbo.supabase.co/functions/v1/get-current-object');
-  
+  const itemList = await fetch(
+    "https://lwszddermdgmlwofpwbo.supabase.co/functions/v1/get-current-object",
+  );
 
   return itemList.json();
 }
@@ -14,5 +16,5 @@ export async function getCurrentObject(): Promise<CurrentObjectResponse> {
 export default async function Page() {
   const data = await getCurrentObject();
 
-  return data
+  return data;
 }
