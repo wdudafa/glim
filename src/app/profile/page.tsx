@@ -8,7 +8,7 @@ export default function ProfilePage() {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           alignItems: "center",
           gap: 20,
         }}
