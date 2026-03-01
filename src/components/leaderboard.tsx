@@ -1,29 +1,60 @@
-// components/TopScore.tsx
 import { supabasePublic } from "@/lib/DatabaseData";
 
-async function getGlobalTopScore() {
-  const { data, error } = await supabasePublic
-    .from("users_times")
-    .select("total_seconds")
-    .order("total_seconds", { ascending: false })
-    .limit(1)
-    .single(); // This tells Supabase to return an object, not an array
-
-  if (error) {
-    console.error("Error:", error);
-    return 0;
-  }
-
-  return data.total_seconds;
+interface ScoreEntry {
+  name: string;
+  total_seconds: number;
 }
 
-export default async function TopScoreDisplay() {
-  const topScore = await getGlobalTopScore();
+async function getLeaderboardData(): Promise<ScoreEntry[]> {
+  const { data, error } = await supabasePublic
+    .from("users_times")
+    .select("name, total_seconds")
+    .order("total_seconds", { ascending: true }) // Ascending usually better for "time" (fastest first)
+    .limit(50);
+
+  if (error) {
+    console.error("Error fetching leaderboard:", error);
+    return [];
+  }
+
+  return data as ScoreEntry[];
+}
+
+export default async function TopScore() {
+  const scores = await getLeaderboardData();
 
   return (
-    <div className="p-4 bg-yellow-100 border-2 border-yellow-400 rounded-lg">
-      <p className="text-sm uppercase font-bold text-yellow-700">World Record</p>
-      <span className="text-3xl font-black text-yellow-900">{topScore}s</span>
-    </div>
+    <main className="flex min-h-screen w-full flex-col items-center bg-zinc-950 p-10 font-mono text-yellow-400">
+        <h1 className="text-4xl font-bold text-white mb-6">Leaderboard</h1>
+      <div className="w-full max-w-5xl overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl mt-40">
+        
+        <div className="flex w-full border-b border-zinc-800 bg-zinc-800/50 py-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
+          <div className="w-1/3 px-6">Rank</div>
+          <div className="w-1/3 px-6">Name</div>
+          <div className="w-1/3 px-6 text-right sm:text-left">High Score</div>
+        </div>
+
+        <ul className="w-full divide-y divide-zinc-800">
+          {scores.map((player, index) => (
+            <li
+              key={`${player.name}-${index}`}
+              className="group flex items-center py-4 transition-colors hover:bg-zinc-800/30"
+            >
+              <div className="w-1/3 px-6 font-bold text-white group-hover:text-yellow-400">
+                #{(index + 1).toString().padStart(2)}
+              </div>
+              
+              <div className="w-1/3 px-6 uppercase truncate">
+                {player.name}
+              </div>
+              
+              <div className="w-1/3 px-6 text-zinc-300 group-hover:text-white">
+                {player.total_seconds} <span className="text-[20px] text-zinc-500">s</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </main>
   );
 }
