@@ -20,7 +20,7 @@ export default function CameraPage() {
   const [image, setImage] = useState("");
   const prompt = "pen";
   const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey: "AIzaSyAnqPkQhm92x-486yRx4ypQO4_5btmYnxc",
   });
   const router = useRouter();
 

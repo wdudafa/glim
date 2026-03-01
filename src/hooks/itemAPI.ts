@@ -4,7 +4,7 @@ export interface CurrentObjectResponse {
   bucket: number;
 }
 
-async function getCurrentObject(): Promise<CurrentObjectResponse> {
+export async function getCurrentObject(): Promise<CurrentObjectResponse> {
   const itemList = await fetch('https://lwszddermdgmlwofpwbo.supabase.co/functions/v1/get-current-object');
   
 
