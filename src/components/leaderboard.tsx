@@ -1,4 +1,5 @@
 import { supabasePublic } from "@/lib/DatabaseData";
+import Link from "next/link";
 
 interface Score {
   name: string;
@@ -24,7 +25,9 @@ export default async function TopScore() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center bg-zinc-950 p-10 font-mono text-yellow-400">
-        <h1 className="text-4xl font-bold text-white mb-6">Leaderboard</h1>
+        <div className="flex flex-row"> <Link href="/"><span className="text-white hover:text-yellow-400">← Back to Home</span></Link> <h1 className="text-4xl font-bold text-white mb-6">Leaderboard</h1>
+        </div>
+       
       <div className="w-full max-w-5xl overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 shadow-2xl mt-40">
         
         <div className="flex w-full border-b border-zinc-800 bg-zinc-800/50 py-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
