@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   // TODO change this to not be so hard coded
-  return NextResponse.json({ result: "true" });
-  
+  return NextResponse.json({ result: "false" });
+
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
