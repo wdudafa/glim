@@ -144,7 +144,7 @@ export default function CameraPage() {
             <img src={image} alt="Preview" className="w-full h-full object-cover" />
           )}
         </div>
-        <div className="mt-55 absolute top-0 w-full z-10 p-8 pt-12 flex flex-col items-center bg-gradient-to-b from-black/80 to-transparent">
+        <div className="absolute top-0 w-full z-10 p-8 pt-12 flex flex-col items-center bg-gradient-to-b from-black/80 to-transparent">
           <h1 className="text-white text-2xl font-black uppercase tracking-tighter mb-2">
             {prompt || "Loading..."}
           </h1>

@@ -22,7 +22,7 @@ export default function Timer({ switchesAt, camera }: TimerProps) {
         if (camera) {
           router.push("/");
         } else {
-          router.refresh();
+          router.push("/");
         }
         router.refresh();
       }
