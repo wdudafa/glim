@@ -77,8 +77,8 @@ export default async function Home() {
           )}
         </div>
 
-        <div className="text-[10px] uppercase text-zinc-700">
-          Logged in as: {user ? user.email : "External Node"}
+        <div className="text-[15px] uppercase text-white">
+          Logged in as: {user ? user.name : "External Node"}
         </div>
       </div>
     </main>

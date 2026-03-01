@@ -1,23 +1,22 @@
 import { supabasePublic } from "@/lib/DatabaseData";
 
-interface ScoreEntry {
+interface Score {
   name: string;
   total_seconds: number;
 }
 
-async function getLeaderboardData(): Promise<ScoreEntry[]> {
+async function getLeaderboardData(): Promise<Score[]> {
   const { data, error } = await supabasePublic
     .from("users_times")
     .select("name, total_seconds")
-    .order("total_seconds", { ascending: true }) // Ascending usually better for "time" (fastest first)
-    .limit(50);
+    .order("total_seconds", { ascending: true })
 
   if (error) {
     console.error("Error fetching leaderboard:", error);
     return [];
   }
 
-  return data as ScoreEntry[];
+  return data as Score[];
 }
 
 export default async function TopScore() {
