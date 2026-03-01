@@ -49,7 +49,7 @@ export default function Timer({
       <div className="mt-2 h-1 w-24 overflow-hidden rounded-full bg-gray-400">
         <div
           className="h-full bg-yellow-400 transition-all duration-1000 ease-linear"
-          style={{ width: `${Math.min((time / 120) * 200, 100)}%` }}
+          style={{ width: `${Math.min((time / 120) * 400, 100)}%` }}
         />
       </div>
     </div>

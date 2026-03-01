@@ -25,7 +25,9 @@ export default function CameraPage() {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [createdAt, setCreatedTime] = useState<Date | null>(null);
   const [switchesAt, setSwitchesAt] = useState<Date | null>(null);
-  const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
+  const [facingMode, setFacingMode] = useState<"user" | "environment">(
+    "environment",
+  );
 
   const router = useRouter();
   const [prompt, setPrompt] = useState<string>("");
@@ -152,6 +154,7 @@ export default function CameraPage() {
       console.error("Supabase error:", error);
       return;
     }
+    alert("Well done!");
     router.push("/leaderboard");
   };
 
@@ -172,7 +175,7 @@ export default function CameraPage() {
             zIndex: 2,
             padding: "10px 20px",
             flexDirection: "column",
-            borderRadius: 30
+            borderRadius: 30,
           }}
         >
           <h1
@@ -199,7 +202,11 @@ export default function CameraPage() {
           </button>
 
           <button
-            style={buttonStyle}
+            style={
+              image
+                ? buttonStyle
+                : { ...buttonStyle, backgroundColor: "lightblue" }
+            }
             onClick={() => {
               if (!image) {
                 takePhoto();
@@ -208,11 +215,19 @@ export default function CameraPage() {
               }
             }}
           >
-            {image ? <CiRedo size={35} /> : <CiCamera size={35} />}
+            {image ? (
+              <CiRedo size={35} />
+            ) : (
+              <CiCamera size={35} color="black" />
+            )}
           </button>
 
           <button
-            style={buttonStyle}
+            style={
+              image
+                ? { ...buttonStyle, backgroundColor: "lightgreen" }
+                : buttonStyle
+            }
             onClick={async () => {
               if (!image) {
                 switchCamera();
@@ -221,7 +236,11 @@ export default function CameraPage() {
               }
             }}
           >
-            {image ? <CiCircleCheck size={35} /> : <CiUndo size={35} />}
+            {image ? (
+              <CiCircleCheck size={35} color="black" />
+            ) : (
+              <CiUndo size={35} />
+            )}
           </button>
 
           <button
