@@ -2,10 +2,10 @@ import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const apiKey = process.env.GOOGLE_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return NextResponse.json(
-      { error: "Missing GOOGLE_API_KEY" },
+      { error: "Missing GEMINI_API_KEY " },
       { status: 500 },
     );
   }

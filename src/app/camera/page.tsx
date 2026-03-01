@@ -1,6 +1,6 @@
 "use client";
 import AuthWrapper from "@/components/AuthWrapper";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Timer from "@/components/timer";
 import {
@@ -12,6 +12,7 @@ import {
   CiUndo,
 } from "react-icons/ci";
 import { buttonStyle } from "@/util/buttonStyle";
+import { getCurrentObject } from "@/hooks/itemAPI";
 
 export default function CameraPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -22,7 +23,7 @@ export default function CameraPage() {
   const [facingMode, setFacingMode] = useState<"user" | "environment">("user");
 
   const router = useRouter();
-  const prompt = "pen";
+  const [prompt, setPrompt] = useState<string>("");
 
   useEffect(() => {
     const startCamera = async () => {
@@ -47,6 +48,19 @@ export default function CameraPage() {
       stream?.getTracks().forEach((track) => track.stop());
     };
   }, [facingMode]);
+
+  useEffect(() => {
+    const loadPrompt = async () => {
+      try {
+        const result = await getCurrentObject();
+        setPrompt(result.item);
+      } catch (err) {
+        console.error("Failed to load object:", err);
+      }
+    };
+
+    loadPrompt();
+  }, []);
 
   const takePhoto = () => {
     if (!videoRef.current || !canvasRef.current) return;
